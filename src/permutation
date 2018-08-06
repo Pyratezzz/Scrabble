@@ -1,0 +1,47 @@
+
+	public static HashMap <String, Integer> scoreMap = new HashMap<String,Integer>();
+	
+	final public static int [] scoreArray = {1, 3, 3, 2, 1, 4 ,2, 4, 1,8,
+			5, 1,3, 1, 0, 3, 10, 1, 1,1, 1, 4, 4, 8, 4,10};
+	
+	
+	public static int getScore(String str) {
+		
+		int sum = 0;
+		for(int i = 0; i < str.length(); i++) {
+			char ch = str.charAt(i);
+			sum += scoreArray[ch-'A'];
+		}
+		return sum;
+		
+	}
+	
+	public static List <String> permutations = new ArrayList<>();
+	
+	
+	public static void getPermutation(String s, int fixed) {
+		char[] chr=s.toCharArray();
+	    if(fixed==s.length())
+	           permutations.add(s);
+	    for(int i=fixed;i<s.length();i++) {
+	        char c=chr[i];
+	        chr[i]=chr[fixed];
+	        chr[fixed]=c;
+	        getPermutation(new String(chr),fixed+1);
+	    }   
+
+	}
+	
+	public static void allPermutation (String str) {
+		permutations.clear();
+		getPermutation(str, 0);
+		for(int i=0; i< permutations.size(); i++) {
+			boolean check = isValid(permutations.get(i));
+			if(check){
+				int scr = getScore(permutations.get(i));
+				scoreMap.put(permutations.get(i), scr);
+			}
+		}
+		
+		
+	}
